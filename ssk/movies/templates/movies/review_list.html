@@ -3,10 +3,12 @@
 <ul>
     {% for review in reviews %}
     <h3>리뷰 리스트</h3>
+    <a href="{% url 'movies:review_create' %}" class="btn btn-primary">글쓰러 가자</a>
 
     <li>
-        <h3>{{ review.title }}</h3>
+        <h3><a href="{% url 'movies:review_detail' review.movie.id review.id %}">{{ review.title }}</a></h3>
         <p>{{ review.user.username }}</p>
+        <p>{{ review.movie.title }}</p>
     </li>
     {% endfor %}
 </ul>

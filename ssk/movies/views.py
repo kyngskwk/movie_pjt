@@ -15,24 +15,23 @@ def movie_list(request):
 
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
+    reviews = movie.review_set.all()
     context = {
-        'movie': movie
+        'movie': movie,
+        'reviews': reviews
     }
     return render(request, 'movies/movie_detail.html', context)
 
 
 def review_list(request):
-    movies = Movie.objects.all()
     reviews = Review.objects.all()
     context =  {
-        'movies': movies,
         'reviews': reviews
     }
     return render(request, 'movies/review_list.html', context)
 
 
-def review_create(request, movie_id):
-    movie = get_object_or_404(Movie, id=movie_id)
+def review_create(request):
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
@@ -40,13 +39,26 @@ def review_create(request, movie_id):
             review.user = request.user
             review.movie = movie
             review.save()
-            return redirect('movies:movie_detail', movie.id)
+            return redirect('movies:movie_detail', review.movie.id)
 
     else:
         review_form = ReviewForm()
 
     context = {
         'review_form': review_form,
-        'movie': movie,
     }
     return render(request, 'movies/review_create.html', context)
+
+
+def review_detail(request, movie_id, review_id):
+   movie = get_object_or_404(Movie, id=movie_id)
+   review = get_object_or_404(Review, id=review_id)
+   context = {
+       'movie': movie,
+       'review': review
+   }
+   return render(request, 'movies/review_detail.html', context)
+
+
+
+    

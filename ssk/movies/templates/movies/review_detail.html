@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> 리뷰 디테일 </h1>
+<br>
+<h3>{{ review.movie.title }}의 리뷰</h3>
+<h5>{{ review.title }}</h5>
+<p>{{ review.user.username }}</p>
+{% endblock %}

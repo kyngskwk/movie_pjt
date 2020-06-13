@@ -5,6 +5,14 @@
 <div id="movie_detail">
   <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt="">  
   <p>{{ movie.overview }}</p>
+  <ul>
+    {% for review in reviews %}
+    <li><a href="{% url 'movies:review_detail' movie.id review.id %}">{{ review.title }}</a></li>
+    {% endfor %}
+  </ul>
+ 
+
+
 </div>
 
 
