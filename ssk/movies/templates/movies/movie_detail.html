@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ movie.title }}</h1>
+<button>리뷰 쓰러 가기</button>
+<div id="movie_detail">
+  <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt="">  
+  <p>{{ movie.overview }}</p>
+</div>
+
+
+
+<script>
+    // const URL = 'https://api.themoviedb.org/3/movie/' + {{ movie.id }} + '?api_key=d689b32a04ce5d8848100e823ed584d7&language=ko-KR'
+    
+    // axios.get(URL)
+    // .then(response => {
+    //     console.log(response)
+    // })
+
+// const app = new Vue({
+//     el: '#movie_detail',
+//     data: {
+//         overview
+//     },
+//     methods: {
+
+//     }
+
+// })
+
+</script>
+{% endblock %}

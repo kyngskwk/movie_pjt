@@ -1,0 +1,16 @@
+certifi==2020.4.5.2
+chardet==3.0.4
+Django==2.1.15
+extras==1.0.0
+fixtures==3.0.0
+idna==2.9
+linecache2==1.0.0
+pbr==5.4.5
+python-mimeparse==1.6.0
+pytz==2020.1
+requests==2.23.0
+six==1.15.0
+testtools==2.4.0
+traceback2==1.4.0
+unittest2==1.1.0
+urllib3==1.25.9

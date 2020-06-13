@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<ul>
+    {% for movie in movies %}
+    <li>
+        <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt=""></a>
+        <h2>{{ movie.title }}</h2>
+        <p>{{ movie.vote_average }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
