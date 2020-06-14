@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movie, Review
-from .forms import ReviewForm, ReviewForm2
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
+from .models import Movie, Review
+from .forms import ReviewForm, ReviewForm2
 # Create your views here.
+
 
 def movie_list(request):
     movies = Movie.objects.all()
@@ -31,6 +33,7 @@ def review_list(request):
     return render(request, 'movies/review_list.html', context)
 
 
+@login_required
 def review_create(request):
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
@@ -60,7 +63,7 @@ def review_detail(request, movie_id, review_id):
    return render(request, 'movies/review_detail.html', context)
 
 
-
+@login_required
 def review_c(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     if request.method == 'POST':
@@ -82,6 +85,7 @@ def review_c(request, movie_id):
     return render(request, 'movies/movie_review.html', context)
 
 
+@login_required
 def review_update(request, movie_id, review_id):
     movie = get_object_or_404(Movie, id=movie_id)
     review = get_object_or_404(Review, id=review_id)
@@ -104,3 +108,12 @@ def review_update(request, movie_id, review_id):
         }
         return render(request, 'movies/review_create.html', context)
 
+
+@login_required
+@require_POST
+def review_delete(request, movie_id, review_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    review = get_object_or_404(Review, id=review_id)
+    if request.user == review.user:
+        review.delete()
+    return redirect('movies:review_list')

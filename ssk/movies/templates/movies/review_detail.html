@@ -7,7 +7,12 @@
 
 {% if review.user == request.user %}
     <a href="{% url 'movies:review_update' movie.id review.id %}" class="btn btn-primary">수정하기</a>
+    <form action="{% url 'movies:review_delete' movie.id review.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">삭제하기</button>
+    </form>
 {% endif %}
+
 <br>
 
 <h3>{{ review.movie.title }}의 리뷰</h3>
