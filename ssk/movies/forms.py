@@ -1,5 +1,5 @@
 from django import forms
-from .models import Movie, Review, MovieComment
+from .models import Movie, Review, MovieComment, ReviewComment
 import requests
 import json
 
@@ -40,3 +40,10 @@ class MovieCommentForm(forms.ModelForm):
     class Meta:
         model = MovieComment
         fields = ['score', 'content']
+
+
+class ReviewCommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = ReviewComment
+        fields = ['content']
