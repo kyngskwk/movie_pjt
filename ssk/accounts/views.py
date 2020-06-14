@@ -14,7 +14,7 @@ User = get_user_model()
 def signup(request):
     # 로그인 되어있다면
     if request.user.is_authenticated:
-        return redirect('articles:index')
+        return redirect('movie:movie_list')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -30,6 +30,8 @@ def signup(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('movie:movie_list')
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
