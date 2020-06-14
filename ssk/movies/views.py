@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
-from .models import Movie, Review
-from .forms import ReviewForm, ReviewForm2
+from .models import Movie, Review, MovieComment
+from .forms import ReviewForm, ReviewForm2, MovieCommentForm
 # Create your views here.
 
 
@@ -18,9 +18,13 @@ def movie_list(request):
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     reviews = movie.review_set.all()
+    comments = movie.moviecomment_set.all()
+    comment_form = MovieCommentForm()
     context = {
         'movie': movie,
-        'reviews': reviews
+        'reviews': reviews,
+        'comments': comments,
+        'comment_form': comment_form
     }
     return render(request, 'movies/movie_detail.html', context)
 
@@ -117,3 +121,26 @@ def review_delete(request, movie_id, review_id):
     if request.user == review.user:
         review.delete()
     return redirect('movies:review_list')
+
+
+@login_required
+def moive_comment_create(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    if request.method == 'POST':
+        comment_form = MovieCommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.movie = movie
+            comment.save()
+    return redirect('movies:movie_detail', movie.id)
+
+
+@require_POST
+@login_required
+def movie_comment_delete(request, movie_id, comment_id):
+    comment = get_object_or_404(MovieComment, id=comment_id)
+    if comment.user != request.user:
+        return redirect('movies:movie_detail', movie_id)
+    comment.delete()
+    return redirect('movies:movie_detail', movie_id)

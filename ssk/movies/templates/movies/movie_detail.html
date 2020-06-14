@@ -1,19 +1,45 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
 <h1>{{ movie.title }}</h1>
 <a href="{% url 'movies:review_c' movie.id %}" class="btn btn-primary">리뷰 쓰러 가기</a>
 <div id="movie_detail">
   <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt="">  
   <p>{{ movie.overview }}</p>
+
+<!--댓글 목록-->
+{% for comment in comments %}
+	<div>
+  댓글 작성자 : {{ comment.user.username }}
+  별점 :  {{ comment.score }}
+  내용 : {{ comment.content }}
+
+  {% if comment.user == request.user %}
+  <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-secondary">댓글삭제</button>
+  </form>
+  {% endif %}
+
+	</div>
+{% endfor %}
+
   <ul>
     {% for review in reviews %}
     <li><a href="{% url 'movies:review_detail' movie.id review.id %}">{{ review.title }}</a></li>
     {% endfor %}
   </ul>
- 
-
-
 </div>
+
+<!--사용자 인증된 사람만 댓글 작성해!-->
+{% if user.is_authenticated %}
+<form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST">
+	{% csrf_token %}
+	{% bootstrap_form comment_form %}
+	<button>댓글작성</button>
+</form>
+{% endif %}
 
 
 
