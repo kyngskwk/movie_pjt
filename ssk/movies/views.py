@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Review
-from .forms import ReviewForm
+from .forms import ReviewForm, ReviewForm2
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -37,9 +37,9 @@ def review_create(request):
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
-            review.movie = movie
+            # review.movie = movie
             review.save()
-            return redirect('movies:movie_detail', review.movie.id)
+            return redirect('movies:review_detail', review.movie.id, review.id)
 
     else:
         review_form = ReviewForm()
@@ -61,4 +61,22 @@ def review_detail(request, movie_id, review_id):
 
 
 
-    
+def review_c(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    if request.method == 'POST':
+        review_form = ReviewForm2(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.movie = movie
+            review.save()
+            return redirect('movies:review_detail', review.movie.id, review.id)
+
+    else:
+        review_form = ReviewForm2()
+
+    context = {
+        'movie': movie,
+        'review_form': review_form,
+    }
+    return render(request, 'movies/movie_review.html', context)

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>{{ movie.title }}</h1>
-<button>리뷰 쓰러 가기</button>
+<a href="{% url 'movies:review_c' movie.id %}" class="btn btn-primary">리뷰 쓰러 가기</a>
 <div id="movie_detail">
   <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt="">  
   <p>{{ movie.overview }}</p>
