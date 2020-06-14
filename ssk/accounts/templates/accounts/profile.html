@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>{{ person.username }}의 프로필</h1>
+
+<p>팔로워 : {{ person.followings.all|length }}</p>
+<!--<p>팔로워 : {{ person_followings|length }}</p>-->
+<p>팔로잉 : {{ person.followers.all|length }}</p>
+<!--<p>팔로워 : {{ person_followers|length }}</p>-->
+<hr>
+
+<!-- 로그인한 유저 자신의 프로필에서는 팔로우 버튼이 보이지 않는다. -->
+{% if user != person %} <!--user = request.user, person = 프로필 주인-->
+    {% if user in person.followers.all %}
+        <a href="{% url 'accounts:follow' person.username %}">언팔로우</a>
+    {% else %}
+        <a href="{% url 'accounts:follow' person.username %}">팔로우</a>
+    {% endif %}
+{% endif %}
+
+
+<!--(선택) 해당 프로필의 유저가 작성한 모든 글의 내용과 좋아요 숫자를 보여준다.-->
+<h3>내가 작성한 게시글 목록</h3>
+{% for review in person.review_set.all %}
+<p>{{ review.title }}|{{ review.content }}</p>
+{% endfor %}
+
+<!--해당 프로필의 유저가 좋아요를 누른 게시물-->
+<h3>내가 별점 단 영화 목록</h3>
+{% for moviecomment in person.moviecomment_set.all %} <!--reated어쩌구로 인한!-->
+<p>{{ moviecomment.movie.title }}|{{ moviecomment.score }}</p>
+{% endfor %}
+
+
+{% endblock %}

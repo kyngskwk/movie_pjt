@@ -49,3 +49,26 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('movies:movie_list')
+
+
+@login_required
+def profile(request, username):
+    User = get_user_model()
+    person = get_object_or_404(User, username=username)
+    context = {
+        'person': person
+    }
+    return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+def follow(request, username):
+    me = request.user
+    you = get_object_or_404(get_user_model(), username=username)
+
+    if me != you:
+        if you.followers.filter(id=me.id).exists():
+            you.followers.remove(me)
+        else:
+            you.followers.add(me)
+    return redirect('accounts:profile', username)
