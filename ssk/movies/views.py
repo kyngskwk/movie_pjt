@@ -80,3 +80,27 @@ def review_c(request, movie_id):
         'review_form': review_form,
     }
     return render(request, 'movies/movie_review.html', context)
+
+
+def review_update(request, movie_id, review_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    review = get_object_or_404(Review, id=review_id)
+    if request.user == review.user:
+        if request.method == 'POST':
+            review_form = ReviewForm(request.POST, instance=review)
+            if review_form.is_valid():
+                review = review_form.save(commit=False)
+                review.user = request.user
+                review.save()
+                return redirect('movies:review_detail', review.movie.pk, review.id)
+            
+        else:
+            review_form = ReviewForm(instance=review)
+
+        context = {
+            'review_form': review_form,
+            'review': review,
+            'movie': movie
+        }
+        return render(request, 'movies/review_create.html', context)
+

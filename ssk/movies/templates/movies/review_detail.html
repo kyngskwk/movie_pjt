@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
 <h1> 리뷰 디테일 </h1>
 <br>
+
+{% if review.user == request.user %}
+    <a href="{% url 'movies:review_update' movie.id review.id %}" class="btn btn-primary">수정하기</a>
+{% endif %}
+<br>
+
 <h3>{{ review.movie.title }}의 리뷰</h3>
 <h5>{{ review.title }}</h5>
 <p>{{ review.user.username }}</p>
