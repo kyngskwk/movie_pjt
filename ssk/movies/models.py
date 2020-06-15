@@ -22,9 +22,8 @@ class Cast(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     overview = models.TextField(blank=True)
-    vote_average = models.IntegerField()
     poster_path = models.CharField(max_length=200, null=True)
-    cast = models.ManyToManyField(Cast, related_name='cast', blank=True)
+    cast = models.ManyToManyField(Cast, related_name='cast_movie', blank=True)
 
     def __str__(self):
         return self.title

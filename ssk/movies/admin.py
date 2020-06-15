@@ -5,4 +5,5 @@ admin.site.register(Movie)
 admin.site.register(Review)
 admin.site.register(MovieComment)
 admin.site.register(ReviewComment)
+admin.site.register(Cast)
 # Register your models here.
