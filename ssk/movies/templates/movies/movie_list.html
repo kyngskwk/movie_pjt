@@ -1,14 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load bootstrap_pagination %}
 
-<ul>
-    {% for movie in movies %}
-    <li>
-        <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt=""></a>
-        <h2>{{ movie.title }}</h2>
-        <p>{{ movie.vote_average }}</p>
-    </li>
+<div class="recommend row p-2" style="background-color: #ea1f4f; border-radius: 20px;">
+    <div class="p-3 mb-3 col-3" >
+        <h1 style="color: #ffffff;" class="mb-5">
+            TODAY'S <br>
+            PICK <br>
+            FOR {{ user.username }}
+        </h1> 
+        <p style="font-family: 'Nanum Gothic', sans-serif; color: white; font-size: 13px;">{{ actor.overview }}</p>
+    </div> 
+    <div class="col-9 pt-2">
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/{{ actor.title }}trailer/" frameborder="0" allowfullscreen class="mb-0"></iframe>
+    </div>
+    
+    <!-- {% for other in others %}
+    <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ other.poster_path }}" alt="" style="width: 20%;">
+    {% endfor %} -->
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 mt-5">
+    {% for movie in page_obj %}
+    <div class="col mb-4 movie-card">
+      <div class="card h-100 movie-content">
+        <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" class="card-img-top" alt="...">
+        <div class="card-body movie-body">
+          <h5 class="card-title" style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold">{{ movie.title }}</h5>
+          <p class="movie-overview" style="font-family: 'Nanum Gothic', sans-serif;">{{ movie.overview }}</p>
+          <a href="{% url 'movies:movie_detail' movie.id %}" class="btn text-white" style="background-color: #ea1f4f; font-family: 'Nanum Gothic', sans-serif;">영화 상세보기</a>
+        </div>
+      </div>
+    </div>
     {% endfor %}
-</ul>
+  </div>
+
+<div>{% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}</div>
+
+  
 {% endblock %}
+
+<script>
+    // var Youtube = require('youtube-node');
+    // var youtube = new YouTube();
+
+    // var word = '{{ actor.title }}'
+    // var limit = 1;
+    // youtube.setKey('AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4');
+    // youtube.addParam('order', 'rating'); // 평점 순으로 정렬
+    // youtube.addParam('type', 'video');   // 타입 지정
+    // youtube.addParam('videoLicense', 'creativeCommon');
+
+    // youtube.search(word, limit, function (err, result) { // 검색 실행
+    // if (err) { console.log(err); return; } // 에러일 경우 에러공지하고 빠져나감
+
+    // console.log(JSON.stringify(result, null, 2)); // 받아온 전체 리스트 출력
+
+    // var items = result["items"]; // 결과 중 items 항목만 가져옴
+    //     for (var i in items) { 
+    //         var it = items[i];
+    //         var title = it["snippet"]["title"];
+    //         var video_id = it["id"]["videoId"];
+    //         var url = "https://www.youtube.com/watch?v=" + video_id;
+    //         console.log("제목 : " + title);
+    //         console.log("URL : " + url);
+    //         console.log("-----------");
+    //     }
+    // });
+
+</script>
 

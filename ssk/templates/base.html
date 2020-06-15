@@ -10,33 +10,54 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>GOD FILM</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Raleway:wght@200;300&family=Suez+One&display=swap" rel="stylesheet">
     <style>
       p {font-family: 'Raleway', sans-serif;}
-      #back { width: 100%; height: 100%; overflow: hidden; background-color: #0f0f11;}
+      #back { width: 100%; background-color: #0f0f11;}
+      .nav-item {margin-left: 10px;}
+      .nav-item > a {font-family: 'Suez One', serif; color: white;}
+      .nav-item > a:hover {color: #ea1f4f}
+      h1 {font-family: 'Suez One', serif;}
+      .movie-overview {display: none;}
+      .movie-card:hover .movie-overview {display: inline-block;}
+      .movie-card:hover .movie-content {border: solid #ea1f4f; border-radius: 5px;}
+
+
     </style>
 
 </head>
 <body id="back">
     <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="#">
-        <img src="{% static 'image/bottomlg.png' %}" alt="" style="width: 100px;">
+      <a class="navbar-brand m-2" href="{% url 'movies:movie_list'%}">
+        <img src="{% static 'image/logo.png' %}" alt="" style="width: 120px;">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse  d-flex justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link">목록</a>
+            <a class="nav-link" href="{% url 'movies:movie_list' %}">MOVIE</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">새 글</a>
+            <a class="nav-link" href="{% url 'movies:review_list' %}">REVIEW</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:profile' user.username %}">MY PAGE</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:logout' %}">LOGOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:login' %}">LOGIN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">SIGNUP</a>
           </li>
         </ul>
       </div>
     </nav>
-    <div class="container">
+    <div class="container p-5">
       {% block content %}
       {% endblock %}
     </div>

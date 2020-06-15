@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
@@ -13,8 +14,21 @@ def start(request):
 
 def movie_list(request):
     movies = Movie.objects.all()
+    if request.user.is_authenticated:
+        if request.user.moviecomment_set.count() != 0:
+            cast_list = request.user.moviecomment_set.order_by('-score')[0].movie.cast.all()
+            actor = cast_list[0]
+            others = cast_list[1:3]
+    
+    paginator = Paginator(movies, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'movies': movies,
+        'others': others,
+        'actor': actor,
+        'page_obj': page_obj
     }
     return render(request, 'movies/movie_list.html', context)
 
