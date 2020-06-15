@@ -12,7 +12,9 @@
         <p style="font-family: 'Nanum Gothic', sans-serif; color: white; font-size: 13px;">{{ actor.overview }}</p>
     </div> 
     <div class="col-9 pt-2">
-        <iframe width="100%" height="500" src="https://www.youtube.com/embed/{{ actor.title }}trailer/" frameborder="0" allowfullscreen class="mb-0"></iframe>
+        {% for youtube_item in youtube_items %}
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" frameborder="0" allow="autoplay;" allowfullscreen class="mb-0"></iframe>
+        {% endfor %}
     </div>
     
     <!-- {% for other in others %}

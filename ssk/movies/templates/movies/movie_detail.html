@@ -1,18 +1,49 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
-<h1>{{ movie.title }}</h1>
-<a href="{% url 'movies:review_c' movie.id %}" class="btn btn-primary">리뷰 쓰러 가기</a>
-<div id="movie_detail">
-  <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" alt="">  
-  <p>{{ movie.overview }}</p>
+<div class="d-flex justify-content-between">
+  <h1 style="font-family: 'Suez One', serif; color: white;">ABOUT MORE</h1>
+  <a href="{% url 'movies:review_c' movie.id %}" class="btn text-white review-btn" 
+  style="border-radius: 50px; height: 40px; font-family: 'Suez One', serif; background-color: #ea1f4f;">REVIEW</a>
+</div>
+
+<div class=" mb-3" style="width: 100%;">
+  <div class="row no-gutters" style="border: solid #ea1f4f; border-radius: 10px;">
+    <div class="col-md-4">
+      <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ movie.poster_path }}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8" style="background-color: white;">
+      <div class="card-body" style="">
+        <h5 class="card-title" style="font-size: 30px; font-family: 'Nanum Gothic', sans-serif;">{{ movie.title }}</h5>
+        <p class="card-text" style="font-family: 'Nanum Gothic', sans-serif;">{{ movie.overview }}</p>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<h1 class="mt-5" style="font-family: 'Suez One', serif; color: white;">Characters</h1>
+<div class="row row-cols-1 row-cols-md-3">
   {% for person in movie.cast.all %}
-    <p>{{ person.name }}</p>
-    <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ person.profile_path }}" alt=""> 
+  <div class="col mb-4">
+    <div class="card">
+      {% if pserson.profile_path != "" %}
+        <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ person.profile_path }}" class="card-img-top" alt="...">
+      {% else %}
+        <img src="{% static 'image/noprofile.png' %}" class="card-img-top" alt="...">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title" style="font-family: 'Suez One', serif;">{{ person.name }}</h5>
+      </div>
+    </div>
+  </div>
   {% endfor %}
+</div>
 
 
+<h1 style="font-family: 'Suez One', serif; color: white;" class="mt-5">Comments</h1>
 <!--댓글 목록-->
 {% for comment in comments %}
 	<div>
@@ -30,12 +61,18 @@
 	</div>
 {% endfor %}
 
-  <ul>
-    {% for review in reviews %}
-    <li><a href="{% url 'movies:review_detail' movie.id review.id %}">{{ review.title }}</a></li>
-    {% endfor %}
-  </ul>
+<h1 style="font-family: 'Suez One', serif; color: white;" class="mt-5">Review</h1>
+{% for review in reviews %}
+<div class="card">
+  <h5 class="card-header">{{ review.user }}님의 리뷰</h5>
+  <div class="card-body">
+    <p class="card-text">{{ review.title }}</p>
+    <a href="{% url 'movies:review_detail' movie.id review.id %}" class="btn">MORE</a>
+  </div>
 </div>
+{% endfor %}
+
+
 
 <!--사용자 인증된 사람만 댓글 작성해!-->
 {% if user.is_authenticated %}

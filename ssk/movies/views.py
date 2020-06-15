@@ -1,3 +1,5 @@
+import requests
+import json
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
@@ -20,6 +22,18 @@ def movie_list(request):
             actor = cast_list[0]
             others = cast_list[1:3]
     
+    inputvalue = actor.title + 'trailer'
+    url = 'https://www.googleapis.com/youtube/v3/search'
+    params = {
+        'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
+        'part': 'snippet',
+        'type': 'video',
+        'maxResults': '1',
+        'q': inputvalue,
+    }
+    response = requests.get(url, params)
+    response_dict = response.json()
+    
     paginator = Paginator(movies, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -28,7 +42,8 @@ def movie_list(request):
         'movies': movies,
         'others': others,
         'actor': actor,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'youtube_items': response_dict['items']
     }
     return render(request, 'movies/movie_list.html', context)
 
