@@ -4,6 +4,7 @@ certifi==2020.4.5.2
 chardet==3.0.4
 Django==3.0.7
 django-bootstrap4==2.0.1
+djangotoolbox==1.8.0
 idna==2.9
 pytz==2020.1
 requests==2.23.0
