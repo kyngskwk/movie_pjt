@@ -7,6 +7,10 @@ from .forms import ReviewForm, ReviewForm2, MovieCommentForm, ReviewCommentForm
 # Create your views here.
 
 
+def start(request):
+    return render(request, 'movies/start.html')
+
+
 def movie_list(request):
     movies = Movie.objects.all()
     context = {

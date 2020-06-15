@@ -15,6 +15,8 @@ User = get_user_model()
 
 # Create your views here.
 
+
+
 def signup(request):
     # 로그인 되어있다면
     if request.user.is_authenticated:
@@ -63,7 +65,7 @@ def profile(request, username):
         cast_list = person.moviecomment_set.order_by('-score')[0].movie.cast.all()
         # movies = person.moviecomment_set.order_by('-score').values('movie_id')
         # casts = Movie.objects.filter(movie_id=movies).cast_id
-        
+
  
     context = {
         'person': person,
