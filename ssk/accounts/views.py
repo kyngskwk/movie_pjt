@@ -4,7 +4,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+
 from .forms import CustomUserCreationForm
+from movies.models import Movie, Cast
+
+
 
 
 User = get_user_model()
@@ -55,8 +59,17 @@ def logout(request):
 def profile(request, username):
     User = get_user_model()
     person = get_object_or_404(User, username=username)
+    if person.moviecomment_set.count() != 0:
+        cast_list = person.moviecomment_set.order_by('-score')[0].movie.cast.all()
+        # movies = person.moviecomment_set.order_by('-score').values('movie_id')
+        # casts = Movie.objects.filter(movie_id=movies).cast_id
+        
+ 
     context = {
-        'person': person
+        'person': person,
+        # 'movies': movies,
+        'cast_list': cast_list,
+  
     }
     return render(request, 'accounts/profile.html', context)
 

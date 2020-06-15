@@ -9,6 +9,7 @@
   <p>{{ movie.overview }}</p>
   {% for person in movie.cast.all %}
     <p>{{ person.name }}</p>
+    <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ person.profile_path }}" alt=""> 
   {% endfor %}
 
 

@@ -10,6 +10,15 @@
 <!--<p>팔로워 : {{ person_followers|length }}</p>-->
 <hr>
 
+<!-- 추천항목 -->
+{% for actor in cast_list%}
+    <h1>{{ actor.name }}</h1>
+    <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ actor.poster_path }}" alt="">
+    <h3>{{ actor.title }}</h3>
+
+{% endfor %}
+
+
 <!-- 로그인한 유저 자신의 프로필에서는 팔로우 버튼이 보이지 않는다. -->
 {% if user != person %} <!--user = request.user, person = 프로필 주인-->
     {% if user in person.followers.all %}
