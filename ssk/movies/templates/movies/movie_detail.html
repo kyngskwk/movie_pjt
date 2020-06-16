@@ -53,8 +53,9 @@
           <span style="display: inline-block;">{{ comment.content }}</span>
         </div>
         
-        <div class="d-flex justify-content-end">
-          {% if comment.user == request.user %}
+        
+        {% if comment.user == request.user %}
+          <div class="d-flex justify-content-end">
           <a href="{% url 'movies:movie_comment_update' movie.id comment.id %}" class="comment-update">update</a>
           <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
             {% csrf_token %}
