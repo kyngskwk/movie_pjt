@@ -37,7 +37,24 @@
     {% endfor %}
   </div>
 
-<div>{% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}</div>
+
+<div class="pagination d-flex justify-content-center mt-5">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1" class="page-num">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}" class="page-num">previous</a>
+      {% endif %}
+
+      <span class="current page-now">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="page-num">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}" class="page-num">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
 
   
 {% endblock %}

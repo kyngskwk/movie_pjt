@@ -35,7 +35,7 @@ def movie_list(request):
     url = 'https://www.googleapis.com/youtube/v3/search'
 
     params = {
-        'key': 'AIzaSyDs5bMb_QNJn4whyR9yWMRP_r6BzDVAyZQ',
+        'key': 'AIzaSyDTbIcGHsuUUIRshQMA8M9xBXKzMpIKHK8',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
