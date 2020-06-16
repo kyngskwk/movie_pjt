@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
-
-
 {% block content %}
-<form action="" method="POST">
+
+<div style="margin-bottom: 50px;">
+  <h1 style="color: white;">LOGIN</h1>
+  <h5 style="color: white;">Let's enjoy with <span style="color: #ea1f4f;">Godfilm</span></h5>
+</div>
+
+<form action="" method="POST" style="font-family: 'Nanum Gothic', sans-serif; color: white;">
   {% csrf_token %}
   {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary"> 로그인하기 </button>
-    <a href="{% url 'accounts:signup' %}" class="btn btn-danger">회원가입</a>
+  <div class="d-flex justify-content-end mt-3">
+    <button type="submit" class="btn mr-3 login-button" style="font-family: 'Suez One', serif;">LOGIN</button>
+    <a href="{% url 'accounts:signup' %}" class="btn" style="border-radius: 50px; background-color: #ea1f4f; color: white; font-family: 'Suez One', serif;">SIGN UP</a>
+  </div>
 </form>
 {% endblock %}

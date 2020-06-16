@@ -29,7 +29,7 @@
   {% for person in movie.cast.all %}
   <div class="col mb-4">
     <div class="card">
-      {% if pserson.profile_path|length != 0 %}
+      {% if person.profile_path|length != 0 %}
         <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ person.profile_path }}" class="card-img-top" alt="...">
       {% else %}
         <img src="{% static 'image/noprofile.png' %}" class="card-img-top" alt="...">
@@ -83,7 +83,7 @@
 <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="opinion">How about you?</h1>
 <!--사용자 인증된 사람만 댓글 작성해!-->
 {% if user.is_authenticated %}
-<form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST" class="text-white">
+<form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST" style="font-family: 'Suez One', serif; color: white;">
 	{% csrf_token %}
 	{% bootstrap_form comment_form %}
 	<button class="commtent-btn float-right">SUBMIT</button>

@@ -2,11 +2,16 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h1>{{ movie.title }}리뷰 쓰기</h1>
+<div>
+  <h1 style="color: white;">REVIEW</h1>
+  <h5 style="color: white;">Let's Talk with <span style="color: #ea1f4f;">Godfilm</span></h5>
+</div>
+
+<h1 class="mt-5 text-white" style="font-family: 'Nanum Gothic', sans-serif;">{{ movie.title }}</h1>
 <br>
-<form action="" method="POST">
+<form action="" method="POST" style="font-family: 'Suez One', serif; color: white;">
     {% csrf_token %}
     {% bootstrap_form review_form %}
-      <button type="submit" class="btn btn-primary"> 리뷰쓰기 </button>
+      <button type="submit" class="btn review-create float-right" style="margin-top: 20px;"> submit </button>
   </form>
 {% endblock %}

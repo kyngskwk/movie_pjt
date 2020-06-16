@@ -26,7 +26,7 @@
         <th scope="row">{{ forloop.counter }}</th>
         <td><a href="{% url 'movies:movie_detail' review.movie.id %}">{{ review.movie.title }}</a></td>
         <td><a href="{% url 'movies:review_detail' review.movie.id review.id %}">{{ review.title }}</a></td>
-        <td><a href="{% url 'accounts:profile' user.username %}">{{ review.user.username }}</a></td>
+        <td><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user.username }}</a></td>
       </tr>
     {% endfor %} 
     </tbody>

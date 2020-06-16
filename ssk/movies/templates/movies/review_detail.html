@@ -56,7 +56,7 @@
     <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="opinion">How about you?</h1>
     <!--사용자 인증된 사람만 댓글 작성해!-->
     {% if user.is_authenticated %}
-    <form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST" class="text-white">
+    <form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST" style="font-family: 'Suez One', serif; color: white;">
       {% csrf_token %}
       {% bootstrap_form comment_form %}
       <button class="commtent-btn float-right">SUBMIT</button>

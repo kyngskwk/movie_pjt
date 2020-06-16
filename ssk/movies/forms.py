@@ -5,6 +5,8 @@ import json
 
 
 class ReviewForm(forms.ModelForm):
+    title = forms.CharField(label="Title")
+    content = forms.CharField(label="Content")
 
     class Meta:
         model = Review
@@ -19,21 +21,12 @@ class ReviewForm2(forms.ModelForm):
 
 
 class MovieCommentForm(forms.ModelForm):
-    PICKS = [
-        (0, '0점'),
-        (1, '1점'),
-        (2, '2점'),
-        (3, '3점'),
-        (4, '4점'),
-        (5, '5점'),
-        (6, '6점'),
-        (7, '7점'),
-        (8, '8점'),
-        (9, '9점'),
-        (10, '10점'),
-    ]
-    score = forms.ChoiceField(choices=PICKS, widget=forms.Select(), label="별점")
-    content = forms.CharField(label="댓글 내용")
+    score = forms.IntegerField(
+        label='score',
+        min_value=0,
+        max_value=10,
+    )
+    content = forms.CharField(label="content")
 
     # score = forms.IntegerField(widget = forms.Select())
 
@@ -44,7 +37,7 @@ class MovieCommentForm(forms.ModelForm):
 
 class ReviewCommentForm(forms.ModelForm):
     
-    content = forms.CharField(label="댓글 내용")
+    content = forms.CharField(label="content")
 
     class Meta:
         model = ReviewComment
