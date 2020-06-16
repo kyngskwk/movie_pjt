@@ -32,8 +32,13 @@
                     <img src="{% static 'image/title3.png' %}" alt="">
                 </div>
                 <ul class="menu">
+                    {% if user.is_authenticated %}
+                    <li class="logout"><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+                    <li class="logout"><a href="{% url 'accounts:profile' user.username %}">MY PAGE</a></li>
+                    {% else %}
                     <li class="login"><a href="{% url 'accounts:login' %}">LOGIN</a></li>
                     <li class="signup"><a href="{% url 'accounts:signup' %}">SIGNUP</a></li>
+                    {% endif %}
                     <li class="movie"><a href="{% url 'movies:movie_list' %}">JUST START</a></li>
                 </ul>
             </div> 
