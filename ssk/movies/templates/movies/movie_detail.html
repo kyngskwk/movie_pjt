@@ -43,7 +43,12 @@
 </div>
 
 
-<h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="mt-5">Comments</h1>
+<div class="d-flex justify-content-between">
+  <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;">Comments</h1>
+  {% if comments_count != 0 %}
+    <div class="average mt-3">average | {{ average }}</div>
+  {% endif %}
+</div>
 <!--댓글 목록-->
 	<div class="card">
       {% for comment in comments %}

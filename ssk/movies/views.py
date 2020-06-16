@@ -1,6 +1,7 @@
 import requests
 import json
 from django.http import JsonResponse
+from django.db.models import Avg
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
@@ -60,13 +61,32 @@ def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     reviews = movie.review_set.all()
     comments = movie.moviecomment_set.all()
-    comment_form = MovieCommentForm()
-    context = {
-        'movie': movie,
-        'reviews': reviews,
-        'comments': comments,
-        'comment_form': comment_form
-    }
+    comments_count = movie.moviecomment_set.count()
+    if comments_count != 0:
+        score = movie.moviecomment_set.all().aggregate(Avg('score'))
+        averages = score['score__avg']
+        average = int(averages)
+
+        # average = 
+        comment_form = MovieCommentForm()
+        context = {
+            'comments_count': comments_count,
+            'movie': movie,
+            'reviews': reviews,
+            'comments': comments,
+            'comment_form': comment_form,
+            'average': average
+        }
+
+    else:
+        comment_form = MovieCommentForm()
+        context = {
+            'comments_count': comments_count,
+            'movie': movie,
+            'reviews': reviews,
+            'comments': comments,
+            'comment_form': comment_form,
+        }
     return render(request, 'movies/movie_detail.html', context)
 
 
