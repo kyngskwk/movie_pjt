@@ -55,7 +55,7 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('movies:movie_list')
-    
+
 
 @login_required
 def profile(request, username):
@@ -65,16 +65,22 @@ def profile(request, username):
         cast_list = person.moviecomment_set.order_by('-score')[0].movie.cast.all()
         # movies = person.moviecomment_set.order_by('-score').values('movie_id')
         # casts = Movie.objects.filter(movie_id=movies).cast_id
+        context = {
+            'person': person,
+            # 'movies': movies,
+            'cast_list': cast_list,
+    
+        }
+        return render(request, 'accounts/profile.html', context)
+
     else:
-        cast_list = Movie.objects.order_by('-moviecomment')[0].movie.cast.all()
- 
-    context = {
-        'person': person,
-        # 'movies': movies,
-        'cast_list': cast_list,
-  
-    }
-    return render(request, 'accounts/profile.html', context)
+        context = {
+            'person': person,
+            # 'movies': movies,
+            # 'cast_list': cast_list,
+    
+        }
+        return render(request, 'accounts/profile.html', context)
 
 
 @login_required
