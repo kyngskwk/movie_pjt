@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div>
+    <h1 style="color: white;">Comment Update</h1>
+    <h5 style="color: white;">Let's Talk with <span style="color: #ea1f4f;">Godfilm</span></h5>
+  </div>
+  
+  <form action="" method="POST" class="mt-5" style="font-family: 'Suez One', serif; color: white;">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+        <button type="submit" class="float-right review-create" style="margin-top: 20px;"> update </button>
+    </form>
+
+{% endblock %}

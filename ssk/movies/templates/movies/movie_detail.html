@@ -53,11 +53,15 @@
           <span style="display: inline-block;">{{ comment.content }}</span>
         </div>
         
-        {% if comment.user == request.user %}
-        <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
-          {% csrf_token %}
-          <button class="btn delete-btn">X</button>
-        </form>
+        <div class="d-flex justify-content-end">
+          {% if comment.user == request.user %}
+          <a href="{% url 'movies:movie_comment_update' movie.id comment.id %}" class="comment-update">update</a>
+          <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn delete-btn">X</button>
+          </form>
+        </div>
+        
         {% endif %}
       </div>
       {% endfor %}

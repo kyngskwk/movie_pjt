@@ -145,7 +145,7 @@ def review_update(request, movie_id, review_id):
                 review = review_form.save(commit=False)
                 review.user = request.user
                 review.save()
-                return redirect('movies:review_detail', review.movie.pk, review.id)
+                return redirect('movies:review_detail', review.movie.id, review.id)
             
         else:
             review_form = ReviewForm(instance=review)
@@ -192,6 +192,26 @@ def movie_comment_delete(request, movie_id, comment_id):
 
 
 @login_required
+def movie_comment_update(request, movie_id, comment_id):
+    comment = get_object_or_404(MovieComment, id=comment_id)
+    if comment.user == request.user:
+        if request.method == 'POST':
+            comment_form = MovieCommentForm(request.POST, instance=comment)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.user = request.user
+                comment.save()
+                return redirect('movies:movie_detail', comment.movie.id)
+
+        else:
+            comment_form = MovieCommentForm(instance=comment)
+        context = {
+            'comment_form': comment_form,
+        }
+        return render(request, 'movies/movie_comment_update.html', context)
+
+
+@login_required
 def review_comment_create(request, movie_id, review_id):
     movie = get_object_or_404(Movie, id=movie_id)
     review = get_object_or_404(Review, id=review_id)
@@ -213,6 +233,9 @@ def review_comment_delete(request, movie_id, review_id, comment_id):
         return redirect('movies:review_detail', movie_id, review_id)
     comment.delete()
     return redirect('movies:review_detail', movie_id, review_id)
+
+
+
 
 
 @login_required
