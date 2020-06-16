@@ -29,7 +29,7 @@
   {% for person in movie.cast.all %}
   <div class="col mb-4">
     <div class="card">
-      {% if pserson.profile_path != "" %}
+      {% if pserson.profile_path|length != 0 %}
         <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ person.profile_path }}" class="card-img-top" alt="...">
       {% else %}
         <img src="{% static 'image/noprofile.png' %}" class="card-img-top" alt="...">

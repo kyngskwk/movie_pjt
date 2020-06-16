@@ -1,45 +1,101 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
-<h1>{{ person.username }}의 프로필</h1>
+<div class="d-flex justify-content-start">
+    <h1 style="color: white;"><span style="color: #ea1f4f;">{{ person.username }}</span>'s Profile</h1>
+    {% if user != person %} <!--user = request.user, person = 프로필 주인-->
+    <a href="{% url 'accounts:follow' person.username %}" class="mt-3 ml-3">
+        {% if user in person.followers.all %}
+            <i class="fas fa-user-plus" style="color: #ea1f4f;"></i>
+        {% else %}
+            <i class="fas fa-user-plus" style="color: white;"></i>
+        {% endif %}
+    </a>
+    {% endif %}
+</div>
 
-<p>팔로워 : {{ person.followings.all|length }}</p>
-<!--<p>팔로워 : {{ person_followings|length }}</p>-->
-<p>팔로잉 : {{ person.followers.all|length }}</p>
-<!--<p>팔로워 : {{ person_followers|length }}</p>-->
-<hr>
+<div class="follow-info">
+    <span class="mr-2"> follower | {{ person.followings.all|length }}</span>
+    <!--<p>팔로워 : {{ person_followings|length }}</p>-->
+    <span class="mr-2"> following | {{ person.followers.all|length }}</span>
+    <!--<p>팔로워 : {{ person_followers|length }}</p>-->
+    <span class="mr-2"> comments | {{ person.moviecomment_set.count }}</span>
+    <span class="mr-2"> reviews | {{ person.review_set.count }}</span>
+</div>
+
+
 
 <!-- 추천항목 -->
-{% for actor in cast_list %}
-    <h1>{{ actor.name }}</h1>
-    <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ actor.poster_path }}" alt="">
-    <h3>{{ actor.title }}</h3>
-
-{% endfor %}
+<h1 class="text-white mt-5"> GOD FILM's <span style="color: #ea1f4f;">PICK</span></h1>
 
 
-<!-- 로그인한 유저 자신의 프로필에서는 팔로우 버튼이 보이지 않는다. -->
-{% if user != person %} <!--user = request.user, person = 프로필 주인-->
-    {% if user in person.followers.all %}
-        <a href="{% url 'accounts:follow' person.username %}">언팔로우</a>
-    {% else %}
-        <a href="{% url 'accounts:follow' person.username %}">팔로우</a>
-    {% endif %}
-{% endif %}
+<div class="row row-cols-1 row-cols-md-3">
+    {% for actor in cast_list %}
+    <div class="col mb-4 movie-card">
+      <div class="card h-100">
+            {% if actor.poster_path|length != 0%}
+            <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ actor.poster_path }}" alt="">
+        {% else %}
+            <img src="{% static 'image/noprofile.png' %}" alt="">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold">{{ actor.title }}</h5>
+          <p class="card-text movie-overview" style="font-family: 'Nanum Gothic', sans-serif;">{{ actor.overview }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+    
 
 
-<!--(선택) 해당 프로필의 유저가 작성한 모든 글의 내용과 좋아요 숫자를 보여준다.-->
-<h3>내가 작성한 게시글 목록</h3>
+
+<div class="d-flex justify-content-start">
+    <h1 style="color: white; margin: 70px 0 30px 0;"><span style="color: #ea1f4f;">{{ person.username }}</span>'s Reviews</h1>
+    <div class="follow-info" style="margin: 70px 0 30px 0;"><span class="ml-3 mt-3 px-2">{{  person.review_set.count }}</span></div>
+</div>
 {% for review in person.review_set.all %}
-<p>{{ review.title }}|{{ review.content }}</p>
+  <div class="card mb-2">
+    <h5 class="card-header d-flex justify-content-between">
+      <span style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ person.username }}</a>님의 리뷰</span>
+      <a href="{% url 'movies:review_detail' review.movie.id review.id %}" class="btn review-more">MORE</a>
+    </h5>
+    <div class="card-body d-flex justify-content-between">
+      <p class="card-text">{{ review.title }}</p>
+      {% if review.user == request.user %}
+      <form action="{% url 'movies:review_delete' review.movie.id review.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn delete-btn">X</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
 {% endfor %}
 
-<!--해당 프로필의 유저가 좋아요를 누른 게시물-->
-<h3>내가 별점 단 영화 목록</h3>
-{% for moviecomment in person.moviecomment_set.all %} <!--reated어쩌구로 인한!-->
-<p>{{ moviecomment.movie.title }}|{{ moviecomment.score }}</p>
-{% endfor %}
+<div class="d-flex justify-content-start">
+    <h1 style="color: white;  margin: 70px 0 30px 0;"><span style="color: #ea1f4f;">{{ person.username }}</span>'s Comments</h1>
+    <div class="follow-info" style="margin: 70px 0 30px 0;"><span class="ml-3 mt-3 px-2">{{ person.moviecomment_set.count }}</span></div>
+</div>
+<div class="card">
+    {% for moviecomment in person.moviecomment_set.all %}
+    <div class="card-body d-flex justify-content-between">
+      <div>
+        <span style="display: inline-block;">{{ moviecomment.movie.title }}</span> 
+        <span style="display: inline-block;" class="comment-score">{{ moviecomment.score }}</span>
+      </div>
+      
+      {% if moviecomment.user == request.user %}
+      <form action="{% url 'movies:movie_comment_delete' moviecomment.movie.id moviecomment.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn delete-btn">X</button>
+      </form>
+      {% endif %}
+    </div>
+    {% endfor %}
+</div>
 
 
 {% endblock %}
