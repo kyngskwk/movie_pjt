@@ -7,7 +7,6 @@
         <h1 style="color: #ffffff;" class="mb-5">
             TODAY'S <br>
             PICK <br>
-            FOR {{ user.username }}
         </h1> 
         <p style="font-family: 'Nanum Gothic', sans-serif; color: white; font-size: 13px;">{{ actor.overview }}</p>
     </div> 
@@ -16,11 +15,12 @@
         <iframe width="100%" height="500" src="https://www.youtube.com/embed/{{ youtube_item.id.videoId }}" frameborder="0" allow="autoplay;" allowfullscreen class="mb-0"></iframe>
         {% endfor %}
     </div>
+</div>
     
     <!-- {% for other in others %}
     <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ other.poster_path }}" alt="" style="width: 20%;">
     {% endfor %} -->
-</div>
+
 
 <div class="row row-cols-1 row-cols-md-3 mt-5">
     {% for movie in page_obj %}

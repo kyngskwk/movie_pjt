@@ -21,27 +21,34 @@ def movie_list(request):
             cast_list = request.user.moviecomment_set.order_by('-score')[0].movie.cast.all()
             actor = cast_list[0]
             others = cast_list[1:3]
-    
-    inputvalue = actor.title + 'trailer'
+            inputvalue = actor.title + 'trailer'
+        else:
+            movie = Movie.objects.order_by('-moviecomment')[0]
+            inputvalue = movie.title + 'trailer'
+
+    else:
+        movie = Movie.objects.order_by('-moviecomment')[0]
+        inputvalue = movie.title + 'trailer'
+
     url = 'https://www.googleapis.com/youtube/v3/search'
+
     params = {
-        'key': 'AIzaSyCPz_ddnnn-ZBZ2Kw443XEnT0xYRBut4S4',
+        'key': 'AIzaSyDs5bMb_QNJn4whyR9yWMRP_r6BzDVAyZQ',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
         'q': inputvalue,
     }
+
     response = requests.get(url, params)
     response_dict = response.json()
-    
+
     paginator = Paginator(movies, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
         'movies': movies,
-        'others': others,
-        'actor': actor,
         'page_obj': page_obj,
         'youtube_items': response_dict['items']
     }

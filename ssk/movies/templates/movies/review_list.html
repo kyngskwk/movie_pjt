@@ -1,16 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul>
-    <h3>리뷰 리스트</h3>
-    <a href="{% url 'movies:review_create' %}" class="btn btn-primary">글쓰러 가자</a>
-    <br>
-    
+<div class="d-flex justify-content-between">
+    <div>
+        <h1 style="color: white;">REVIEW</h1>
+        <h5 style="color: white;">Let's Talk with <span style="color: #ea1f4f;">Godfilm</span></h5>
+    </div>
+    <div>
+        <a href="{% url 'movies:review_create' %}" class="btn review-create">CREATE</a>
+    </div>
+</div>
+
+
+<table class="table table-dark" style="margin-top: 60px;">
+    <thead>
+      <tr class="review-th">
+        <th scope="col">num</th>
+        <th scope="col">MOVIE</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">Writer</th>
+      </tr>
+    </thead>
+    <tbody>
     {% for review in reviews %}
-    <li>
-        <h3><a href="{% url 'movies:review_detail' review.movie.id review.id %}">{{ review.title }}</a></h3>
-        <p>{{ review.user.username }}</p>
-        <p>{{ review.movie.title }}</p>
-    </li>
-    {% endfor %}
-</ul>
+      <tr class="review-td">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><a href="{% url 'movies:movie_detail' review.movie.id %}">{{ review.movie.title }}</a></td>
+        <td><a href="{% url 'movies:review_detail' review.movie.id review.id %}">{{ review.title }}</a></td>
+        <td><a href="{% url 'accounts:profile' user.username %}">{{ review.user.username }}</a></td>
+      </tr>
+    {% endfor %} 
+    </tbody>
+  </table>
+    
+
 {% endblock %}

@@ -32,7 +32,8 @@ class MovieCommentForm(forms.ModelForm):
         (9, '9점'),
         (10, '10점'),
     ]
-    score = forms.ChoiceField(choices=PICKS, widget=forms.Select())
+    score = forms.ChoiceField(choices=PICKS, widget=forms.Select(), label="별점")
+    content = forms.CharField(label="댓글 내용")
 
     # score = forms.IntegerField(widget = forms.Select())
 
@@ -43,6 +44,8 @@ class MovieCommentForm(forms.ModelForm):
 
 class ReviewCommentForm(forms.ModelForm):
     
+    content = forms.CharField(label="댓글 내용")
+
     class Meta:
         model = ReviewComment
         fields = ['content']

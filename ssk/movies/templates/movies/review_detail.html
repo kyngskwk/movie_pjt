@@ -2,48 +2,66 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h1> 리뷰 디테일 </h1>
-<br>
-
-{% if review.user == request.user %}
-    <a href="{% url 'movies:review_update' movie.id review.id %}" class="btn btn-primary">수정하기</a>
-    <form action="{% url 'movies:review_delete' movie.id review.id %}" method="POST">
-        {% csrf_token %}
-        <button class="btn btn-danger">삭제하기</button>
-    </form>
-{% endif %}
-
-<br>
-
-<h3>{{ review.movie.title }}의 리뷰</h3>
-<h5>{{ review.title }}</h5>
-<p>{{ review.user.username }}</p>
+<div style="margin-bottom: 50px;">
+  <h1 style="color: white;">REVIEW</h1>
+  <h5 style="color: white;">Let's Talk with <span style="color: #ea1f4f;">Godfilm</span></h5>
+</div>
 
 
+<div class="card">
+  <h5 class="card-header"><a href="{% url 'movies:movie_detail' movie.id %}" 
+    style="text-decoration:none; font-family: 'Nanum Gothic', sans-serif; font-weight: bold; color:black" class="review-movie">{{ review.movie.title }}</a>
+    <div class="float-right">
+      {% if review.user == request.user %}
+          <a href="{% url 'movies:review_update' movie.id review.id %}" class="btn update-btn review-more">update</a>
+          <form action="{% url 'movies:review_delete' movie.id review.id %}" method="POST" style="display: inline-block;">
+              {% csrf_token %}
+              <button class="btn delete-btn">X</button>
+          </form>
+      {% endif %}
+      </div>
+  </h5>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h5 class="card-title" style="font-family: 'Nanum Gothic', sans-serif; font-weight: bold;">{{ review.title }}</h5>
+      <span><a href="{% url 'accounts:profile' review.user.username %}" class="btn goprofile" style="margin-top: -5px;">{{ review.user.username }}</a><span class="text-muted">님이 작성한 리뷰입니다.</span></span>
+    </div>
+    <p class="card-text" style="font-family: 'Nanum Gothic', sans-serif;">{{ review.content }}</p>
+    
+  </div>
+</div>
 
+
+<h1 style="font-family: 'Suez One', serif; color: white;;" class="mt-5">Comments</h1>
 <!--댓글 목록-->
-{% for comment in comments %}
-	<div>
-  댓글 작성자 : {{ comment.user.username }}
-        내용 : {{ comment.content }}
+	<div class="card">
+      {% for comment in comments %}
+      <div class="card-body d-flex justify-content-between">
+        <div>
+          <span><a href="{% url 'accounts:profile' comment.user %}" class="btn goprofile" style="margin-top: -5px;">{{ comment.user }}</a><span class="text-muted">님의 댓글 | </span></span>
+          <span style="display: inline-block; font-family: 'Nanum Gothic', sans-serif;" class="text-muted">  {{ comment.content }}</span>
+        </div>
         
         {% if comment.user == request.user %}
-        <form action="{% url 'movies:review_comment_delete' movie.id review.id comment.id %}" method="POST">
+        <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
           {% csrf_token %}
-          <button class="btn btn-secondary">댓글삭제</button>
+          <button class="btn delete-btn">X</button>
         </form>
         {% endif %}
+      </div>
+      {% endfor %}
+  </div>
 
-	</div>
-{% endfor %}
-
-<!--사용자 인증된 사람만 댓글 작성해!-->
-{% if user.is_authenticated %}
-<form action="{% url 'movies:review_comment_create' movie.id review.id %}" method="POST">
-	{% csrf_token %}
-	{% bootstrap_form comment_form %}
-	<button>댓글작성</button>
-</form>
-{% endif %}
+  <div class="mb-5">
+    <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="opinion">How about you?</h1>
+    <!--사용자 인증된 사람만 댓글 작성해!-->
+    {% if user.is_authenticated %}
+    <form action="{% url 'movies:moive_comment_create' movie.id %}" method="POST" class="text-white">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <button class="commtent-btn float-right">SUBMIT</button>
+    </form>
+    {% endif %}
+    </div>
 
 {% endblock %}
