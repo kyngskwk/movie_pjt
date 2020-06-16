@@ -6,7 +6,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import CustomUserCreationForm
-from movies.models import Movie, Cast
+from movies.models import Movie, Cast, Review
 
 
 

@@ -10,6 +10,7 @@
 <form action="" method="POST" class="mt-5" style="font-family: 'Suez One', serif; color: white;">
     {% csrf_token %}
     {% bootstrap_form review_form %}
+    {{ content|linebreaksbr }}
       <button type="submit" class="float-right review-create" style="margin-top: 20px;"> submit </button>
   </form>
 {% endblock %}

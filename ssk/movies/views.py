@@ -1,5 +1,6 @@
 import requests
 import json
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
@@ -212,3 +213,25 @@ def review_comment_delete(request, movie_id, review_id, comment_id):
         return redirect('movies:review_detail', movie_id, review_id)
     comment.delete()
     return redirect('movies:review_detail', movie_id, review_id)
+
+
+@login_required
+def like(request, movie_id, review_id):
+    user = request.user
+    movie = get_object_or_404(Movie, id=movie_id)
+    review = get_object_or_404(Review, id=review_id)
+
+    if review.like_users.filter(id=user.id).exists():
+        review.like_users.remove(user)
+        liked = False
+
+    else:
+        review.like_users.add(user)
+        liked = True
+
+    context = {
+        'count': review.like_users.count(),
+        'liked': liked,
+    }
+
+    return JsonResponse(context)

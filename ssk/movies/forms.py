@@ -5,8 +5,7 @@ import json
 
 
 class ReviewForm(forms.ModelForm):
-    title = forms.CharField(label="Title")
-    content = forms.CharField(label="Content")
+    
 
     class Meta:
         model = Review
@@ -14,6 +13,7 @@ class ReviewForm(forms.ModelForm):
 
 
 class ReviewForm2(forms.ModelForm):
+
     
     class Meta:
         model = Review
@@ -26,7 +26,6 @@ class MovieCommentForm(forms.ModelForm):
         min_value=0,
         max_value=10,
     )
-    content = forms.CharField(label="content")
 
     # score = forms.IntegerField(widget = forms.Select())
 
@@ -37,7 +36,6 @@ class MovieCommentForm(forms.ModelForm):
 
 class ReviewCommentForm(forms.ModelForm):
     
-    content = forms.CharField(label="content")
 
     class Meta:
         model = ReviewComment

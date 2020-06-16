@@ -17,13 +17,26 @@
 </div>
 
 <div class="follow-info mt-2">
-    <span class="mr-2"> follower | {{ person.followings.all|length }}</span>
+    <span class="mr-2 following-num"> following | {{ person.followings.all|length }}</span>
     <!--<p>팔로워 : {{ person_followings|length }}</p>-->
-    <span class="mr-2"> following | {{ person.followers.all|length }}</span>
+    <span class="mr-2 follower-num"> follower | {{ person.followers.all|length }}</span>
     <!--<p>팔로워 : {{ person_followers|length }}</p>-->
-    <span class="mr-2"> comments | {{ person.moviecomment_set.count }}</span>
-    <span class="mr-2"> reviews | {{ person.review_set.count }}</span>
+    <span class="mr-2"> comments | {{ person.moviecomment_set|length }}</span>
+    <span class="mr-2"> reviews | {{ person.review_set|length }}</span>
+    <span class="mr-2"> likes | {{ person.like_reviews.all|length }}</span>
+    <!-- <div class="following-list mt-3">
+        {# for following in person.followings.all #}
+        <span class="mr-2">{# following #}</span>
+        {# endfor #}
+    </div>
+    <div class="follower-list mt-3">
+      {# for follower in person.followers.all #}
+      <span class="mr-2">{# followers #}</span>
+      {# endfor #}
+    </div> -->
 </div>
+
+
 
 
 <!-- 본인에게만 추천 목록 표시 -->
@@ -100,6 +113,25 @@
     </div>
     {% endfor %}
 </div>
+
+
+<!--해당 프로필의 유저가 좋아요를 누른 게시물-->
+<div class="d-flex justify-content-start">
+  <h1 style="color: white; margin: 70px 0 30px 0;"><span style="color: #ea1f4f;">{{ person.username }}</span>'s likes</h1>
+  <div class="follow-info" style="margin: 70px 0 30px 0;"><span class="ml-3 mt-3 px-2">{{  person.like_reviews.all.count }}</span></div>
+</div>
+{% for review in person.like_reviews.all %}
+<div class="card mb-2">
+  <h5 class="card-header d-flex justify-content-between">
+    <span style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user.username }}</a>님의 리뷰</span>
+    <a href="{% url 'movies:review_detail' review.movie.id review.id %}" class="btn review-more">MORE</a>
+  </h5>
+  <div class="card-body d-flex justify-content-between">
+    <p class="card-text">{{ review.title }}</p>
+  </div>
+</div>
+{% endfor %}
+
 
 
 {% endblock %}
