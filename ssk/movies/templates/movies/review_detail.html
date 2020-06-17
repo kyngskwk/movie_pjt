@@ -13,7 +13,7 @@
     <a href="{% url 'movies:movie_detail' movie.id %}" 
     style="text-decoration:none; font-family: 'Nanum Gothic', sans-serif; font-weight: bold; color:black" class="review-movie">{{ review.movie.title }}</a>
     <div class="float-right">
-        {% if request.user in movie.like_users.all %}
+        {% if request.user in review.like_users.all %}
           <i class="fas fa-heart fa-lg like-button" style="color:crimson" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
         {% else %}
           <i class="fas fa-heart fa-lg like-button" style="color:gainsboro" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
@@ -82,7 +82,7 @@
     const likeButtonList = document.querySelectorAll('.like-button')
       likeButtonList.forEach(likeButton => {
         likeButton.addEventListener('click', function(event){
-          // console.log(event)
+          console.log(event)
           // -> event.target.dataset.id
           const movieId = event.target.dataset.movieid
           const reviewId = event.target.dataset.reviewid

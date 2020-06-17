@@ -265,7 +265,7 @@ def like(request, movie_id, review_id):
     movie = get_object_or_404(Movie, id=movie_id)
     review = get_object_or_404(Review, id=review_id)
 
-    if review.like_users.filter(id=user.id).exists():
+    if user in review.like_users.all():
         review.like_users.remove(user)
         liked = False
 
