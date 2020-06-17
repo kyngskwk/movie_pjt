@@ -103,6 +103,7 @@
         <span style="display: inline-block;" class="comment-score">{{ moviecomment.score }}</span>
       </div>
         <div class="d-flex justify-content-end">
+            <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2 mr-2">작성 : {{ moviecomment.created_at }} | 수정 : {{ moviecomment.updated_at }}</span>
             <a class="comment-more" href="{% url 'movies:movie_detail' moviecomment.movie.id %}">MORE</a>
             {% if moviecomment.user == request.user %}
             <form action="{% url 'movies:movie_comment_delete' moviecomment.movie.id moviecomment.id %}" method="POST">
@@ -125,7 +126,10 @@
 {% for review in person.like_reviews.all %}
 <div class="card mb-2">
   <h5 class="card-header d-flex justify-content-between">
-    <span style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user.username }}</a>님의 리뷰</span>
+    <div>     
+      <span style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold"><a href="{% url 'accounts:profile' review.user %}" class="goprofile mr-1">{{ review.user.username }}</a>님의 리뷰</span>
+      <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2 ml-2">작성 : {{ review.created_at }} | 수정 : {{ review.updated_at }}</span>
+    </div>
     <a href="{% url 'movies:review_detail' review.movie.id review.id %}" class="btn review-more">MORE</a>
   </h5>
   <div class="card-body d-flex justify-content-between">

@@ -59,18 +59,18 @@
           <span style="display: inline-block;">{{ comment.content }}</span>
         </div>
         
-        
+        <div class="d-flex justify-content-end">
+          <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2">작성 : {{ comment.created_at }} | 수정 : {{ comment.updated_at }}</span>
         {% if comment.user == request.user %}
           <div class="d-flex justify-content-end">
-          <span style="display: inline-block; font-family: 'Nanum Gothic', sans-serif;" class="text-muted mt-1">{{ comment.created_at }}</span>
-          <a href="{% url 'movies:movie_comment_update' movie.id comment.id %}" class="comment-update">update</a>
-          <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
-            {% csrf_token %}
-            <button class="btn delete-btn">X</button>
-          </form>
-        </div>
-        
+            <a href="{% url 'movies:movie_comment_update' movie.id comment.id %}" class="comment-update">update</a>
+            <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
+              {% csrf_token %}
+              <button class="btn delete-btn">X</button>
+            </form>
+          </div>
         {% endif %}
+        </div>
       </div>
       {% endfor %}
   </div>
@@ -81,7 +81,10 @@
 {% for review in reviews %}
   <div class="card mb-2">
     <h5 class="card-header d-flex justify-content-between">
-      <span><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user }}</a>님의 리뷰</span>
+      <div class="d-flex justify-content-end">
+      <span style="font-family: 'Nanum Gothic', sans-serif;" class="mr-3"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user }}</a>님의 리뷰</span>
+      <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2">작성 : {{ review.created_at }} | 수정 : {{ review.updated_at }}</span>
+      </div>
       <a href="{% url 'movies:review_detail' movie.id review.id %}" class="btn review-more">MORE</a>
     </h5>
     <div class="card-body">
