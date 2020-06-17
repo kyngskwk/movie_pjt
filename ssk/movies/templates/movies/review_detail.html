@@ -13,10 +13,10 @@
     <a href="{% url 'movies:movie_detail' movie.id %}" 
     style="text-decoration:none; font-family: 'Nanum Gothic', sans-serif; font-weight: bold; color:black" class="review-movie">{{ review.movie.title }}</a>
     <div class="float-right">
-        {% if user in movie.like_users.all %}
-          <i class="fas fa-heart fa-lg like-button" style="color: #ea1f4f" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
+        {% if request.user in movie.like_users.all %}
+          <i class="fas fa-heart fa-lg like-button" style="color:crimson" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
         {% else %}
-          <i class="fas fa-heart fa-lg like-button" style="color:#cdcccc" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
+          <i class="fas fa-heart fa-lg like-button" style="color:gainsboro" data-movieid="{{ movie.id }}" data-reviewid="{{ review.id }}"></i>
         {% endif %}
         <span id="like-count-{{ review.id }}" class="mr-2">{{ review.like_users.all|length }}</span>
       {% if review.user == request.user %}
@@ -94,9 +94,9 @@
               document.querySelector(`#like-count-${reviewId}`).innerText = response.data.count
 
               if (response.data.liked) {
-                event.target.style.color = '#ea1f4f'
+                event.target.style.color = 'crimson'
               } else {
-                event.target.style.color = '#cdcccc'
+                event.target.style.color = 'gainsboro'
               }
             })
             .catch(error => {
