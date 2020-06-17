@@ -50,6 +50,7 @@
   {% endif %}
 </div>
 <!--댓글 목록-->
+{% if comments_count != 0 %}
 	<div class="card">
       {% for comment in comments %}
       <div class="card-body d-flex justify-content-between">
@@ -61,6 +62,7 @@
         
         {% if comment.user == request.user %}
           <div class="d-flex justify-content-end">
+          <span style="display: inline-block; font-family: 'Nanum Gothic', sans-serif;" class="text-muted mt-1">{{ comment.created_at }}</span>
           <a href="{% url 'movies:movie_comment_update' movie.id comment.id %}" class="comment-update">update</a>
           <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
             {% csrf_token %}
@@ -72,7 +74,7 @@
       </div>
       {% endfor %}
   </div>
-
+{% endif %}
 
 <!-- 리뷰 페이지 -->
 <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="mt-5">Review</h1>

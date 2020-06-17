@@ -94,6 +94,7 @@
     <h1 style="color: white;  margin: 70px 0 30px 0;"><span style="color: #ea1f4f;">{{ person.username }}</span>'s Comments</h1>
     <div class="follow-info" style="margin: 70px 0 30px 0;"><span class="ml-3 mt-3 px-2">{{ person.moviecomment_set.count }}</span></div>
 </div>
+{% if person.moviecomment_set.count != 0%}
 <div class="card">
     {% for moviecomment in person.moviecomment_set.all %}
     <div class="card-body d-flex justify-content-between">
@@ -113,6 +114,7 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}
 
 
 <!--해당 프로필의 유저가 좋아요를 누른 게시물-->

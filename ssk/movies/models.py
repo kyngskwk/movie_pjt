@@ -27,13 +27,6 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
-   
-    # adult = models.BooleanField(blank=True)
-    # original_title = models.CharField(max_length=255, blank=True)
-    # video = models.BooleanField(blank=True) 
-    # vote_count = models.IntegerField(blank=True)
-    # overview = models.CharField(max_length=255, blank=True)
-    # genre_ids = models.CharField(max_length=255, blank=True)
     
 
 class Review(models.Model):
@@ -41,6 +34,8 @@ class Review(models.Model):
     content = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews', blank=True)
 
 
@@ -49,6 +44,7 @@ class MovieComment(models.Model):
     score = models.IntegerField()
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -56,6 +52,7 @@ class MovieComment(models.Model):
 class ReviewComment(models.Model):
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 

@@ -118,6 +118,7 @@ def review_create(request):
     return render(request, 'movies/review_create.html', context)
 
 
+@login_required
 def review_detail(request, movie_id, review_id):
     movie = get_object_or_404(Movie, id=movie_id)
     review = get_object_or_404(Review, id=review_id)
