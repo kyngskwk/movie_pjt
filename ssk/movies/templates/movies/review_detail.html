@@ -55,7 +55,7 @@
         <div class="d-flex justify-content-end">
         <span style="display: inline-block; font-family: 'Nanum Gothic', sans-serif;" class="text-muted mt-2">{{ comment.created_at }}</span>
         {% if comment.user == request.user %}
-        <form action="{% url 'movies:movie_comment_delete' movie.id comment.id %}" method="POST">
+        <form action="{% url 'movies:review_comment_delete' movie.id review.id comment.id %}" method="POST">
           {% csrf_token %}
           <button class="btn delete-btn">X</button>
         </form>

@@ -21,8 +21,8 @@
     <!--<p>팔로워 : {{ person_followings|length }}</p>-->
     <span class="mr-2 follower-num"> follower | {{ person.followers.all|length }}</span>
     <!--<p>팔로워 : {{ person_followers|length }}</p>-->
-    <span class="mr-2"> comments | {{ person.moviecomment_set|length }}</span>
-    <span class="mr-2"> reviews | {{ person.review_set|length }}</span>
+    <span class="mr-2"> comments | {{ person.moviecomment_set.all|length }}</span>
+    <span class="mr-2"> reviews | {{ person.review_set.all|length }}</span>
     <span class="mr-2"> likes | {{ person.like_reviews.all|length }}</span>
     <!-- <div class="following-list mt-3">
         {# for following in person.followings.all #}

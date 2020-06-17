@@ -42,8 +42,32 @@
   {% endfor %}
 </div>
 
-
+<!-- 리뷰 페이지 -->
 <div class="d-flex justify-content-between">
+  <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="mt-5">Review</h1>
+  <a href="{% url 'movies:review_c' movie.id %}" class="btn text-white review-btn mt-5" 
+  style="border-radius: 50px; height: 40px; font-family: 'Suez One', serif; background-color: #ea1f4f;">REVIEW CREATE</a>
+</div>
+{% for review in reviews %}
+  <div class="card mb-2">
+    <h5 class="card-header d-flex justify-content-between">
+      <div class="d-flex justify-content-end">
+      <span style="font-family: 'Nanum Gothic', sans-serif;" class="mr-3"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user }}</a>님의 리뷰</span>
+      <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2">작성 : {{ review.created_at }} | 수정 : {{ review.updated_at }}</span>
+      </div>
+      <a href="{% url 'movies:review_detail' movie.id review.id %}" class="btn review-more">MORE</a>
+    </h5>
+    <div class="card-body">
+      <p class="card-text">{{ review.title }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+
+
+
+
+<div class="d-flex justify-content-between mt-5">
   <h1 style="font-family: 'Suez One', serif; color: #ea1f4f;">Comments</h1>
   {% if comments_count != 0 %}
     <div class="average mt-3">average | {{ average }}</div>
@@ -75,23 +99,6 @@
       {% endfor %}
   </div>
 {% endif %}
-
-<!-- 리뷰 페이지 -->
-<h1 style="font-family: 'Suez One', serif; color: #ea1f4f;" class="mt-5">Review</h1>
-{% for review in reviews %}
-  <div class="card mb-2">
-    <h5 class="card-header d-flex justify-content-between">
-      <div class="d-flex justify-content-end">
-      <span style="font-family: 'Nanum Gothic', sans-serif;" class="mr-3"><a href="{% url 'accounts:profile' review.user %}" class="goprofile">{{ review.user }}</a>님의 리뷰</span>
-      <span style="font-family: 'Nanum Gothic', sans-serif; font-size: 10px;" class="text-muted mt-2">작성 : {{ review.created_at }} | 수정 : {{ review.updated_at }}</span>
-      </div>
-      <a href="{% url 'movies:review_detail' movie.id review.id %}" class="btn review-more">MORE</a>
-    </h5>
-    <div class="card-body">
-      <p class="card-text">{{ review.title }}</p>
-    </div>
-  </div>
-{% endfor %}
 
 
 

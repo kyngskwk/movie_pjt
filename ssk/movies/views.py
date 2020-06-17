@@ -35,7 +35,7 @@ def movie_list(request):
     url = 'https://www.googleapis.com/youtube/v3/search'
 
     params = {
-        'key': 'AIzaSyDTbIcGHsuUUIRshQMA8M9xBXKzMpIKHK8',
+        'key': 'AIzaSyDO_ysrQ-nsWhHT6otS_1iTSq1idrjnku4',
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
@@ -52,7 +52,7 @@ def movie_list(request):
     context = {
         'movies': movies,
         'page_obj': page_obj,
-        'youtube_items': response_dict['items']
+        'youtube_items': response_dict['items'],
     }
     return render(request, 'movies/movie_list.html', context)
 
@@ -207,7 +207,7 @@ def moive_comment_create(request, movie_id):
 def movie_comment_delete(request, movie_id, comment_id):
     comment = get_object_or_404(MovieComment, id=comment_id)
     if comment.user != request.user:
-        return redirect('movies:movie_detail', movie_id)
+        return redirect(request.POST.get('next') or 'movies:movie_detail', movie_id)
     comment.delete()
     return redirect('movies:movie_detail', movie_id)
 
