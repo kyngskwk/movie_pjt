@@ -6,9 +6,11 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from .models import Movie, Review, MovieComment, ReviewComment
 from .forms import ReviewForm, ReviewForm2, MovieCommentForm, ReviewCommentForm
+
 # Create your views here.
 
 
@@ -34,8 +36,10 @@ def movie_list(request):
 
     url = 'https://www.googleapis.com/youtube/v3/search'
 
+    youtube_key = getattr(settings, 'YOUTUBE_KEY', 'localhost')
+
     params = {
-        'key': 'AIzaSyDO_ysrQ-nsWhHT6otS_1iTSq1idrjnku4',
+        'key': youtube_key,
         'part': 'snippet',
         'type': 'video',
         'maxResults': '1',
