@@ -61,18 +61,17 @@ def logout(request):
 def profile(request, username):
     User = get_user_model()
     person = get_object_or_404(User, username=username)
-    if person.moviecomment_set.count() != 0:
+    if person.moviecomment_set.count() != 0: # 사용자의 코멘트 데이터가 있는 경우
+        # 사용자가 부여한 점수를 기준으로 내림차순 정렬을 한 후, 영화의 배우 데이터를 가져온다.
         cast_list = person.moviecomment_set.order_by('-score')[0].movie.cast.all()
-        # movies = person.moviecomment_set.order_by('-score').values('movie_id')
-        # casts = Movie.objects.filter(movie_id=movies).cast_id
-    else:
+
+    else: # 사용자의 코멘트 데이터가 없는 경우
+        # 제일 최근에 코멘트가 달린 영화의 배우 데이터를 가져온다.
         cast_list = Movie.objects.order_by('-moviecomment')[0].cast.all()
  
     context = {
         'person': person,
-        # 'movies': movies,
         'cast_list': cast_list,
-  
     }
     return render(request, 'accounts/profile.html', context)
 

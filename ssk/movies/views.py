@@ -21,23 +21,29 @@ def start(request):
 def movie_list(request):
     movies = Movie.objects.all()
     if request.user.is_authenticated:
-        if request.user.moviecomment_set.count() != 0:
+        if request.user.moviecomment_set.count() != 0: # 사용자의 데이터가 있는 경우
+            # 점수를 기준으로 내림차순 정렬한다.
             cast_list = request.user.moviecomment_set.order_by('-score')[0].movie.cast.all()
+            # 영화 배우들 중 제일 처음 배우를 고른다.
             actor = cast_list[0]
-            others = cast_list[1:3]
+            # 배우가 출연한 영화 제목에 'trailer'를 뒤에 붙여 인풋값을 만든다.
             inputvalue = actor.title + 'trailer'
-        else:
+        else: # 인증된 사용자이나, 데이터가 없는 경우 최근에 별점을 부여받은 영화를 사용한다.
             movie = Movie.objects.order_by('-moviecomment')[0]
+            # 해당 영화 뒤에 'trailer'를 붙여 인풋값 생성한다.
             inputvalue = movie.title + 'trailer'
 
-    else:
+    else: # 인증되지 않은 사용자의 경우
         movie = Movie.objects.order_by('-moviecomment')[0]
         inputvalue = movie.title + 'trailer'
 
     url = 'https://www.googleapis.com/youtube/v3/search'
 
+    # youtube api 키를 따로 secrets.json파일을 만들어서 사용
     youtube_key = getattr(settings, 'YOUTUBE_KEY', 'localhost')
 
+    # url을 통해 넘겨줄 필수 인자들을 정한다.
+    # 검색과 관련된 q태그에 인풋값을 연결시켜준다.
     params = {
         'key': youtube_key,
         'part': 'snippet',
@@ -46,6 +52,7 @@ def movie_list(request):
         'q': inputvalue,
     }
 
+    # url을 통해 얻은 응답을 json형태로 받음
     response = requests.get(url, params)
     response_dict = response.json()
 
@@ -53,6 +60,7 @@ def movie_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    # json 파일에서 'items' 키값으로 필요한 value값에 접근한다.
     context = {
         'movies': movies,
         'page_obj': page_obj,

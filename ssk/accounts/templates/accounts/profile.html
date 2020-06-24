@@ -47,12 +47,13 @@
     {% for actor in cast_list %}
     <div class="col mb-4 movie-card">
       <div class="card h-100">
-            {% if actor.poster_path|length != 0%}
-            <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ actor.poster_path }}" alt="">
-            {% else %}
-                <img src="{% static 'image/noprofile.png' %}" alt="">
-            {% endif %}
-            <div class="card-body">
+        <!-- 포스터 정보가 없는 경우 처리를 따로 해준다. -->
+        {% if actor.poster_path|length != 0%}
+          <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{ actor.poster_path }}" alt="">
+        {% else %}
+          <img src="{% static 'image/noprofile.png' %}" alt="">
+        {% endif %}
+        <div class="card-body">
           <h5 class="card-title" style="font-family: 'Nanum Gothic', sans-serif; font-weight:bold">{{ actor.title }}</h5>
           <p class="card-text movie-overview" style="font-family: 'Nanum Gothic', sans-serif;">{{ actor.overview }}</p>
         </div>
