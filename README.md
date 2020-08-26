@@ -6,6 +6,10 @@
 
 
 
+## 0. 배포 서버 
+
+[:clapper: GOD FILM 바로가기](http://3.131.131.37/movies/)
+
 
 
 ## 1. 목표
@@ -26,7 +30,8 @@
 - Django 2.1.15
 - HTML5 + CSS3 + Bootstrap + Javascript
 
-
+- 배포 
+  - AWS + Nginx + uWSGI 
 
 
 
