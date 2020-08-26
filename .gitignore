@@ -158,7 +158,7 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,django
 
-# secrets.json
+secrets.json
 
 api/
 .api
