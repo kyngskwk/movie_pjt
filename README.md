@@ -37,7 +37,7 @@
 
 ## 3. 역할 분담 및 개발 일정
 
-<img width="779" alt="역할분담" src="https://user-images.githubusercontent.com/60081217/85592074-ce36fa00-b680-11ea-8c4b-eb91a3c35fea.png">
+![스크린샷 2020-09-01 오후 5.07.28](/Users/sekyung/Desktop/스크린샷 2020-09-01 오후 5.07.28.png)
 
 
 
