@@ -37,7 +37,7 @@
 
 ## 3. 역할 분담 및 개발 일정
 
-<img width="762" alt="스크린샷 2020-09-17 오후 9 09 04" src="https://user-images.githubusercontent.com/60081217/93468535-17b67e80-f92a-11ea-95a5-afd693ee6f99.png">
+<img width="762" alt="역할분담" src="https://user-images.githubusercontent.com/60081217/93468750-6a903600-f92a-11ea-8efc-fbd65b2d2ff1.png">
 
 
 
