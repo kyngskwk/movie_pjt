@@ -36,12 +36,8 @@
 
 
 ## 3. 역할 분담 및 개발 일정
-
-<<<<<<< HEAD
-![스크린샷 2020-09-01 오후 5.07.28](/Users/sekyung/Desktop/스크린샷 2020-09-01 오후 5.07.28.png)
-=======
 <img width="762" alt="역할분담" src="https://user-images.githubusercontent.com/60081217/93468750-6a903600-f92a-11ea-8efc-fbd65b2d2ff1.png">
->>>>>>> ff6df6adf0b1499334ade4cb8679fde6d5adc42e
+
 
 
 
